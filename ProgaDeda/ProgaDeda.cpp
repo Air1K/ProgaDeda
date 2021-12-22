@@ -192,13 +192,66 @@ void vse_razmer(double *mass, vector<double> &CP) {
     
     size_CP5 = CP.size() - (size_CP1 + size_CP2 + size_CP3 + size_CP4);
     size_All = CP.size();
-}
-
-void _short(vector<double>& CP) {
     
 }
 
-void delEl() {
+
+
+void delEl(vector<double>& CP) {
+   /* int k = 0;
+    int c = 0;
+    for (int i = 0; i < CP.size(); i++) {
+
+        if((CP[i] != CP[k])&&(i != k)) {
+            c = i - 1 ; //break;
+            auto iter = i;
+            CP.erase(p);
+        }
+        if (CP[k]==CP[i]) {
+
+            k++;
+        }
+    }*/
+
+
+    //Тест неудача
+   /* for (int i = 0; i < CP.size(); i++) {
+        cout << "Процент" << (i / CP.size())*1000000 << "%\n";
+        for (int j = 1; j < CP.size(); j++) {
+            if ((CP[i] == CP[j])&&(i != j)) {
+                CP.erase((CP.begin() + j));
+            }
+        }
+    } */
+   /* vector<double> CP1;
+    CP1.push_back(2);
+    CP1.push_back(2);
+    CP1.push_back(2);
+    CP1.push_back(3);
+    CP1.push_back(3);
+    CP1.push_back(4);
+    CP1.push_back(5);
+    CP1.push_back(5);
+    CP1.push_back(6);*/
+    int k = 0;
+    for (int i = 1; i < CP.size(); i++) {
+       // cout << "Процент сборки" << (i / CP.size()) << "%\n";
+        if (i == 100) {
+            cout << "ssd\n";
+        }
+
+
+        if ((CP[k] == CP[i]) && (i != k)) {
+            CP.erase((CP.begin() + i));
+            i--;
+            continue;
+        }
+        if (CP[k] != CP[i]) {
+            k = i;
+            
+        }
+            
+    }
 
 }
 
@@ -213,7 +266,14 @@ int main()
     openFille(mass); // Считывание изначального массива и перевод в double значение
     vse_razmer(mass, CP);
     sort(CP.begin(), CP.end());
-    
+
+    CP.erase(unique(begin(CP), end(CP)), end(CP));
+
+    //CPNew.reserve(CP.size());
+    //copy(CP.begin(), CP.end(), back_inserter(CPNew));
+
+   // CPNew.erase(unique(begin(CPNew), end(CPNew)), end(CPNew));
+    delEl(CP);
     /*for (int i = 0; i < 88; i++) {
         cout << mass[i] << "\n";
     }
@@ -221,8 +281,9 @@ int main()
     */
     for (int i = 0; i < CP.size(); i++) {
 
-        cout << CP[i] << "\n";
+       // cout << CP[i] <<"  {" << i << "}  " << "\n";
     }
+    size_All = CP.size();
     cout << CP[CP.size() - 5] << "\n";
     cout << CP[CP.size() - 4] << "\n";
     cout << CP[CP.size() - 3] << "\n";
@@ -235,6 +296,8 @@ int main()
     cout << "Размер CP4 - " << size_CP4 << endl;
     cout << "Размер CP5 - " << size_CP5 << endl;
     cout << "Размер вектора - " << size_All << endl;
+
+
 
     clock_t end = clock();
     double seconds = (double)(end - start) / CLOCKS_PER_SEC;
